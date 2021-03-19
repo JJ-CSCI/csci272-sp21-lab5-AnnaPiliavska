@@ -15,8 +15,9 @@ public:
     return n;
   }
   // An overwritten multiplication operation that adds a real value to the stored value in an object of Real class, and returns the results as an **object of Real class** (not double).
-  Real& operator*(double rhs) const {
-    Real res{n * rhs};
+  Real operator*(double rhs) const {
+    Real res {n * rhs};
+    return res;
   }
 };
 class Complex : public Real {
@@ -31,8 +32,11 @@ public:
   double GetImaginary() {
     return c;
   }
-  Complex& operator*(double rhs) const {
-    Complex res {c * rhs};
+  Complex operator*(double rhs) const {
+    Complex res;
+    res.c = rhs * this -> c;
+    Real::operator*(rhs);
+    return res;
   }
 };
 class Surreal : public Complex {
@@ -44,8 +48,10 @@ public:
   double GetSurreal() {
     return sur;
   }
-  Surreal& operator*(double rhs) const {
+  Surreal operator*(double rhs) const {
+    Real::operator*(rhs);
      Surreal res {sur * rhs};
+     return res;
   }
 };
 
