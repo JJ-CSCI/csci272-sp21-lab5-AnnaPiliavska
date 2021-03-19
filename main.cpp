@@ -5,6 +5,57 @@
 //------------------------------
 
 // Write the assignment code here
+class Real {
+private:
+  double n;
+public:
+  Real() {};
+  Real (double num) : n{num} {};
+  double GetReal() {
+    return n;
+  }
+  // An overwritten multiplication operation that adds a real value to the stored value in an object of Real class, and returns the results as an **object of Real class** (not double).
+  Real operator*(double rhs) const {
+    Real res {n * rhs};
+    return res;
+  }
+};
+class Complex : public Real {
+private:
+  using Real::Real;
+  double c;
+   // you defined 2 data members
+   // You only need one, the other one
+   // need to come from the base class
+public:
+  Complex(double num, double im) : Real{num}, c{im} {};  
+  double GetImaginary() {
+    return c;
+  }
+  Complex operator*(double rhs) const {
+    Complex res;
+    res.c = rhs * this -> c;
+    Real::operator*(rhs);
+    return res;
+  }
+};
+class Surreal : public Complex {
+private:
+  using Complex::Complex;
+  double sur;
+public:
+  Surreal (double num, double im, double s) : Complex{num,im}, sur{s} {}; 
+  double GetSurreal() {
+    return sur;
+  }
+  Surreal operator*(double rhs) const {
+    Real::operator*(rhs);
+     Surreal res {sur * rhs};
+     return res;
+  }
+};
+
+
 
 
 //------------------------------
